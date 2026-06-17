@@ -1,11 +1,14 @@
 body {
   margin: 0;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+body.game-body {
   display: flex;
   flex-direction: column;
   height: 100vh;
   overflow: hidden;
   background: #f8f8f7;
-  font-family: "Inter", system-ui, sans-serif;
 }
 
 .game-layout {
