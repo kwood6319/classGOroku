@@ -236,22 +236,28 @@ body {
 .modal-box {
   background: #fff;
   border-radius: 14px;
-  padding: 3rem;
-  max-width: 560px;
-  width: 90%;
+  padding: 4rem;
+  max-width: 80vw;
+  width: 80vw;
+  max-height: 80vh;
   box-shadow: 0 24px 80px rgba(0,0,0,0.2);
   text-align: center;
   border-top: 6px solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal-box--picker {
   border-top: none;
-  padding: 2rem;
-  max-width: 400px;
+  padding: 2.5rem;
+  max-width: 480px;
+  width: 480px;
 }
 
 .modal-label {
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -260,11 +266,11 @@ body {
 }
 
 .modal-instruction {
-  font-size: 1.6rem;
+  font-size: 2.4rem;
   font-weight: 400;
   color: #1a1a1a;
   line-height: 1.4;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .picker-team-list {
@@ -293,10 +299,10 @@ body {
   background: #1a1a1a;
   color: #fff;
   border: none;
-  padding: 0.875rem 2.5rem;
+  padding: 1rem 3rem;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 500;
 }
 
