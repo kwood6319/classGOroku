@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     member do
       get  :lobby
       post :start
+      post :restart
     end
     resources :turns, only: [:create]
   end

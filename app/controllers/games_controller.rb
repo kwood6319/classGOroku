@@ -64,6 +64,33 @@ class GamesController < ApplicationController
     redirect_to new_game_path, notice: "Game ended."
   end
 
+  def restart
+    old_game = Game.find(params[:id])
+
+    new_game = Game.create(
+      grid_x: old_game.grid_x,
+      grid_y: old_game.grid_y,
+      instructions: old_game.instructions,
+      status: "lobby",
+      goal_square: (0...(old_game.total_squares)).to_a.sample,
+      visited_squares: [],
+      used_instructions: []
+    )
+
+    old_game.teams.each do |team|
+      new_game.teams.create(
+        name: team.name,
+        color: team.color,
+        position: nil,
+        on_board: false,
+        turns_count: 0,
+        last_instruction: nil
+      )
+    end
+
+    redirect_to lobby_game_path(new_game)
+  end
+
   private
 
   def game_params
