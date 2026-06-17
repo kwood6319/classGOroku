@@ -137,7 +137,8 @@
     <p class="goal-marker-win">🏆</p>
     <p class="modal-label">We have a winner!</p>
     <p class="modal-instruction" id="win-team-name"></p>
-    <%= button_to "Play Again", new_game_path, method: :get, class: "btn-dismiss" %>
+    <%= button_to "Play Again", restart_game_path(@game), method: :post, class: "btn-dismiss" %>
+    <%= button_to "New Game", new_game_path, method: :get, class: "btn-dismiss-outline mt-2" %>
     <%= button_to "End Game", @game, method: :delete, class: "btn-end-game mt-2" %>
   </div>
 </div>
