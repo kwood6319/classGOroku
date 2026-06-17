@@ -46,6 +46,9 @@ class GamesController < ApplicationController
     @game = Game.find(params[:id])
     @teams = @game.teams.order(:id)
     @total_squares = @game.total_squares
+    @visited_squares = @game.visited_squares || []
+    @current_positions = @game.current_positions
+    @historical_positions = @game.historical_positions
   end
 
   def start

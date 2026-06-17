@@ -1,0 +1,321 @@
+body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: #f8f8f7;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.game-sidebar {
+  background: #fff;
+  border-right: 1px solid #e5e5e3;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow-y: auto;
+}
+
+.sidebar-brand {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #1a1a1a;
+}
+
+.sidebar-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #bbb;
+  margin-bottom: 0.75rem;
+}
+
+/* Team list */
+.team-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.team-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.team-item-main {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.team-item-sub {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 1.4rem;
+}
+
+.team-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.team-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  flex: 1;
+}
+
+.team-turns {
+  font-size: 0.75rem;
+  color: #bbb;
+}
+
+.team-position {
+  font-size: 0.75rem;
+  color: #bbb;
+}
+
+.btn-last-instruction {
+  background: none;
+  border: none;
+  font-size: 0.72rem;
+  color: #bbb;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+
+  &:hover {
+    color: #1a1a1a;
+  }
+}
+
+/* Dice */
+.dice-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-roll {
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.dice-result {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* End game */
+.sidebar-section--danger {
+  margin-top: auto;
+}
+
+.btn-end-game {
+  background: none;
+  border: 1px solid #e5e5e3;
+  color: #bbb;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  width: 100%;
+
+  &:hover {
+    border-color: #cc0000;
+    color: #cc0000;
+  }
+}
+
+/* Board */
+.board-wrap {
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  min-height: 0;
+}
+
+.board-outer {
+  display: grid;
+  grid-template-columns: 24px repeat(var(--cols), 1fr) 24px;
+  grid-template-rows: 24px repeat(var(--rows), 1fr) 24px;
+  gap: 4px;
+  width: #{"min(calc(100vh - 4rem), calc(100vw - 320px))"};
+  height: #{"min(calc(100vh - 4rem), calc(100vw - 320px))"};
+}
+
+.entry-cell {
+  background: transparent;
+}
+
+.square {
+  background: #fff;
+  border: 1px solid #e5e5e3;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 3px 5px;
+  transition: background 0.15s;
+  min-height: 0;
+  overflow: hidden;
+
+  &:hover {
+    border-color: #aaa;
+  }
+}
+
+.square--visited {
+  background: #f0f0ef;
+  cursor: default;
+  pointer-events: none;
+  border-color: #e5e5e3;
+}
+
+.square-number {
+  font-size: 0.6rem;
+  color: #ccc;
+  font-weight: 500;
+  line-height: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* Team overlays — fill the square with team color */
+.square-team-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-backdrop--locked {
+  pointer-events: all;
+}
+
+.modal-box {
+  background: #fff;
+  border-radius: 14px;
+  padding: 3rem;
+  max-width: 560px;
+  width: 90%;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.2);
+  text-align: center;
+  border-top: 6px solid transparent;
+}
+
+.modal-box--picker {
+  border-top: none;
+  padding: 2rem;
+  max-width: 400px;
+}
+
+.modal-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 1.5rem;
+}
+
+.modal-instruction {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: #1a1a1a;
+  line-height: 1.4;
+  margin-bottom: 2rem;
+}
+
+.picker-team-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.picker-team-btn {
+  background: #fff;
+  border: 2px solid;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.btn-dismiss {
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 0.875rem 2.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.btn-dismiss-outline {
+  background: none;
+  border: 1px solid #e5e5e3;
+  color: #999;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  width: 100%;
+}
+
+.goal-marker-win {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}

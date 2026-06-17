@@ -34,4 +34,25 @@ class Game < ApplicationRecord
     save
     instruction
   end
+
+  def current_positions
+    teams.each_with_object({}) do |team, hash|
+      next unless team.on_board
+
+      hash[team.position] ||= []
+      hash[team.position] << team
+    end
+  end
+
+  def historical_positions
+    all_turns = turns.includes(:team).order(:id)
+    current = teams.each_with_object({}) { |t, h| h[t.id] = t.position if t.on_board }
+
+    all_turns.each_with_object({}) do |turn, hash|
+      next if current[turn.team_id] == turn.square
+
+      hash[turn.square] ||= []
+      hash[turn.square] << turn.team unless hash[turn.square].map(&:id).include?(turn.team_id)
+    end
+  end
 end
