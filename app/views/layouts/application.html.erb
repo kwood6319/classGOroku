@@ -18,7 +18,7 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-  <body>
+  <body class="<%= yield :body_class %>">
     <%= yield %>
     <% if notice %>
       <% if notice.start_with?("WIN:") %>

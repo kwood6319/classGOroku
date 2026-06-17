@@ -1,8 +1,20 @@
-.setup-page,
 .lobby-page {
   max-width: 640px;
   margin: 0 auto;
   padding: 3rem 1.5rem;
+}
+
+.setup-page {
+  max-width: 900px;  // wider than before
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.setup-row-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .setup-header,
