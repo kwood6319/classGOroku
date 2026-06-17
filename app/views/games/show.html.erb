@@ -1,2 +1,154 @@
-<h1>Games#show</h1>
-<p>Find me in app/views/games/show.html.erb</p>
+<div class="game-layout" data-controller="square-picker">
+  <%# Sidebar %>
+  <aside class="game-sidebar">
+    <div class="sidebar-brand">classGOroku</div>
+    <%# Teams %>
+    <div class="sidebar-section">
+      <span class="sidebar-label">Teams</span>
+      <ul class="team-list">
+        <% @teams.each do |team| %>
+          <li class="team-item">
+            <div class="team-item-main">
+              <span class="team-dot" style="background-color: <%= team.color %>;"></span>
+              <span class="team-name"><%= team.name %></span>
+              <span class="team-turns"><%= team.turns_count %> turns</span>
+            </div>
+            <div class="team-item-sub">
+              <span class="team-position text-muted">
+                <%= team.on_board ? "Square #{team.position + 1}" : "Not yet on board" %>
+              </span>
+              <% if team.last_instruction.present? %>
+                <button class="btn-last-instruction"
+                        data-action="click->square-picker#showLastInstruction"
+                  data-instruction="<%= team.last_instruction %>"
+                  data-color="<%= team.color %>"
+                  data-team="<%= team.name %>">
+                  Last instruction
+                </button>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <%# Dice %>
+    <div class="sidebar-section" data-controller="dice">
+      <span class="sidebar-label">Dice</span>
+      <div class="dice-row">
+        <button class="btn-roll" data-action="click->dice#roll">Roll</button>
+        <span class="dice-result" data-dice-target="result">—</span>
+      </div>
+    </div>
+    <%# End Game %>
+    <div class="sidebar-section sidebar-section--danger">
+      <%= button_to "End Game", @game, method: :delete,
+          class: "btn-end-game",
+          data: { turbo_confirm: "Are you sure you want to end this game?" } %>
+    </div>
+  </aside>
+  <%# Board %>
+  <main class="board-wrap">
+    <% visited = @game.visited_squares || [] %>
+    <div class="board-outer"
+         style="--cols: <%= @game.grid_x %>; --rows: <%= @game.grid_y %>;">
+      <%# Top entry cells %>
+      <div class="entry-cell entry-corner"></div>
+      <% (0...@game.grid_x).each do |col| %>
+        <div class="entry-cell"></div>
+      <% end %>
+      <div class="entry-cell entry-corner"></div>
+      <%# Board rows %>
+      <% @game.grid_y.times do |row| %>
+        <div class="entry-cell"></div>
+        <% (0...@game.grid_x).each do |col| %>
+          <% i = row * @game.grid_x + col %>
+          <%
+            current_teams  = @current_positions[i] || []
+            historic_teams = @historical_positions[i] || []
+            is_visited     = visited.include?(i)
+          %>
+          <div class="square <%= 'square--visited' if is_visited %>"
+               data-index="<%= i %>"
+               data-action="<%= 'click->square-picker#selectSquare' unless is_visited %>">
+            <span class="square-number"><%= i + 1 %></span>
+            <%# Current team overlays %>
+            <% current_teams.each do |team| %>
+              <div class="square-team-overlay square-team-overlay--current"
+                   style="background-color: <%= team.color %>; opacity: 0.5;">
+              </div>
+            <% end %>
+            <%# Historic team overlays %>
+            <% historic_teams.each do |team| %>
+              <div class="square-team-overlay square-team-overlay--historic"
+                   style="background-color: <%= team.color %>; opacity: 0.2;">
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        <div class="entry-cell"></div>
+      <% end %>
+      <%# Bottom entry cells %>
+      <div class="entry-cell entry-corner"></div>
+      <% (0...@game.grid_x).each do |col| %>
+        <div class="entry-cell"></div>
+      <% end %>
+      <div class="entry-cell entry-corner"></div>
+    </div>
+  </main>
+</div>
+<%# Team Picker Modal — appears on square click %>
+<div class="modal-backdrop" id="team-picker-modal" style="display:none;"
+     onclick="this.style.display='none'">
+  <div class="modal-box modal-box--picker" onclick="event.stopPropagation()">
+    <p class="modal-label">Moving to square <span id="picker-square-label"></span></p>
+    <div class="picker-team-list" id="picker-team-list"></div>
+    <button class="btn-dismiss-outline" onclick="document.getElementById('team-picker-modal').style.display='none'">
+      Cancel
+    </button>
+  </div>
+</div>
+<%# Instruction Modal %>
+<div class="modal-backdrop" id="instruction-modal" style="display:none;"
+     onclick="this.style.display='none'">
+  <div class="modal-box" id="instruction-modal-box" onclick="event.stopPropagation()">
+    <p class="modal-label" id="instruction-modal-team"></p>
+    <p class="modal-instruction" id="modal-instruction-text"></p>
+    <button class="btn-dismiss"
+            onclick="document.getElementById('instruction-modal').style.display='none'">
+      Got it
+    </button>
+  </div>
+</div>
+<%# Last Instruction Modal %>
+<div class="modal-backdrop" id="last-instruction-modal" style="display:none;"
+     onclick="this.style.display='none'">
+  <div class="modal-box" id="last-instruction-modal-box" onclick="event.stopPropagation()">
+    <p class="modal-label" id="last-instruction-team"></p>
+    <p class="modal-instruction" id="last-instruction-text"></p>
+    <button class="btn-dismiss"
+            onclick="document.getElementById('last-instruction-modal').style.display='none'">
+      Close
+    </button>
+  </div>
+</div>
+<%# Win Modal %>
+<div class="modal-backdrop modal-backdrop--locked" id="win-modal" style="display:none;">
+  <div class="modal-box">
+    <p class="goal-marker-win">🏆</p>
+    <p class="modal-label">We have a winner!</p>
+    <p class="modal-instruction" id="win-team-name"></p>
+    <%= button_to "Play Again", new_game_path, method: :get, class: "btn-dismiss" %>
+    <%= button_to "End Game", @game, method: :delete, class: "btn-end-game mt-2" %>
+  </div>
+</div>
+<%# Hidden turn form %>
+<%= form_with url: game_turns_path(@game), method: :post,
+              id: "turn-form", data: { turbo: "false" } do |f| %>
+  <%= hidden_field_tag :square, nil, id: "turn-square" %>
+  <%= hidden_field_tag :team_id, nil, id: "turn-team-id" %>
+<% end %>
+<%# Pass teams data to Stimulus %>
+<div id="teams-data"
+     data-teams="<%= @teams.to_json(only: [:id, :name, :color]) %>"
+     style="display:none;">
+</div>
