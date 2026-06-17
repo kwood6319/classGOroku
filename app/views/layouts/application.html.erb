@@ -33,7 +33,7 @@
         <% instruction = parts[2] %>
         <script>
           const box = document.getElementById("instruction-modal-box");
-          document.getElementById("modal-instruction-text").textContent = "<%= j instruction %>";
+          document.getElementById("modal-instruction-text").textContent = <%= raw instruction.to_json %>;
           document.getElementById("instruction-modal-team").textContent = "Your instruction";
           box.style.borderTop = "6px solid <%= color %>";
           document.getElementById("instruction-modal").style.display = "flex";
