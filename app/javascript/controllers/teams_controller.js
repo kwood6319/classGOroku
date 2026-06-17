@@ -1,7 +1,24 @@
+// app/javascript/controllers/teams_controller.js
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["container"]
+
+  colors = [
+    "#E63946", // red
+    "#2A9D8F", // teal
+    "#fdd777", // yellow
+    "#9B5DE5", // purple
+    "#F4A261", // orange
+    "#3A86FF", // blue
+    "#06D6A0", // green
+    "#f87ab1", // pink
+  ]
+
+  connect() {
+    // Mark the initial team's color as used
+    this.usedColors = ["#E63946"]
+  }
 
   addTeam() {
     const teamCount = this.containerTarget.querySelectorAll(".team-fields").length + 1
@@ -11,19 +28,25 @@ export default class extends Controller {
       i.value = `Team ${teamCount}`
     })
 
+    const color = this.nextColor()
     clone.querySelectorAll("input[type=color]").forEach(i => {
-      i.value = this.randomColor()
+      i.value = color
     })
 
     this.containerTarget.appendChild(clone)
   }
 
-  randomColor() {
-    const colors = [
-      "#E63946", "#2A9D8F", "#E9C46A", "#F4A261",
-      "#457B9D", "#8338EC", "#FB5607", "#3A86FF",
-      "#06D6A0", "#FF006E", "#FFBE0B", "#8ECAE6"
-    ]
-    return colors[Math.floor(Math.random() * colors.length)]
+  nextColor() {
+    const available = this.colors.filter(c => !this.usedColors.includes(c))
+
+    // Reset if all colors used
+    if (available.length === 0) {
+      this.usedColors = []
+      return this.colors[0]
+    }
+
+    const color = available[0]
+    this.usedColors.push(color)
+    return color
   }
 }
