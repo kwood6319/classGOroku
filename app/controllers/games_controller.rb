@@ -1,5 +1,6 @@
 class GamesController < ApplicationController
   require "csv"
+  require "cgi"
 
   def new
     @game = Game.new
@@ -75,12 +76,11 @@ class GamesController < ApplicationController
   end
 
   def sanitize_instruction(text)
-    text
-      .gsub("\u2018", "'").gsub("\u2019", "'")   # smart single quotes
-      .gsub("\u201C", '"').gsub("\u201D", '"')   # smart double quotes
-      .gsub("\u2013", "-").gsub("\u2014", "-")   # en/em dashes
-      .gsub("\u2026", "...")                      # ellipsis
-      .gsub("%quote", '"')                        # literal %quote artifact
-      .strip
+    CGI.unescapeHTML(text)
+       .gsub("\u2018", "'").gsub("\u2019", "'")
+       .gsub("\u201C", '"').gsub("\u201D", '"')
+       .gsub("\u2013", "-").gsub("\u2014", "-")
+       .gsub("\u2026", "...")
+       .strip
   end
 end
