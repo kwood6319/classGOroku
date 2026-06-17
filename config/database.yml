@@ -87,18 +87,13 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: class_g_oroku_production
-    username: class_g_oroku
-    password: <%= ENV["CLASS_G_OROKU_DATABASE_PASSWORD"] %>
+    url: <%= ENV["DATABASE_URL"] %>
   cache:
     <<: *primary_production
-    database: class_g_oroku_production_cache
-    migrations_paths: db/cache_migrate
+    url: <%= ENV["DATABASE_URL"] %>
   queue:
     <<: *primary_production
-    database: class_g_oroku_production_queue
-    migrations_paths: db/queue_migrate
+    url: <%= ENV["DATABASE_URL"] %>
   cable:
     <<: *primary_production
-    database: class_g_oroku_production_cable
-    migrations_paths: db/cable_migrate
+    url: <%= ENV["DATABASE_URL"] %>
