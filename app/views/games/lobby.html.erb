@@ -1,2 +1,55 @@
-<h1>Games#lobby</h1>
-<p>Find me in app/views/games/lobby.html.erb</p>
+<div class="lobby-page">
+  <div class="lobby-header">
+    <h1 class="setup-title">classGOroku</h1>
+    <p class="setup-subtitle">Get ready to play</p>
+  </div>
+  <div class="lobby-grid">
+    <%# Preparation checklist %>
+    <div class="setup-card">
+      <h2 class="setup-card-title">Before You Start</h2>
+      <ul class="checklist">
+        <li class="checklist-item">
+          <span class="check">✓</span>
+          Students are in their teams
+        </li>
+        <li class="checklist-item">
+          <span class="check">✓</span>
+          Each team has paper and pen to write their instructions
+        </li>
+        <li class="checklist-item">
+          <span class="check">✓</span>
+          The board is visible to all teams
+        </li>
+        <li class="checklist-item">
+          <span class="check">✓</span>
+          A physical dice is ready (or use the on-screen roller)
+        </li>
+      </ul>
+    </div>
+    <%# Teams summary %>
+    <div class="setup-card">
+      <h2 class="setup-card-title">Teams</h2>
+      <ul class="lobby-team-list">
+        <% @teams.each do |team| %>
+          <li class="lobby-team-item">
+            <span class="lobby-team-dot" style="background-color: <%= team.color %>;"></span>
+            <%= team.name %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <%# GM only — goal square %>
+    <div class="setup-card setup-card--highlight">
+      <h2 class="setup-card-title">GM Only 👀</h2>
+      <p class="gm-hint">The goal square is:</p>
+      <p class="gm-goal-square">#<%= @game.goal_square + 1 %></p>
+      <p class="gm-hint-sub">Use this to give hints if teams are stuck.</p>
+    </div>
+    <%# Instructions count %>
+    <div class="setup-card">
+      <h2 class="setup-card-title">Instructions Loaded</h2>
+      <p class="gm-goal-square"><%= @game.instructions.count %></p>
+    </div>
+  </div>
+  <%= button_to "Start Game", start_game_path(@game), method: :post, class: "btn-primary-action" %>
+</div>
