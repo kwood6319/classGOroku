@@ -88,12 +88,16 @@ production:
   primary: &primary_production
     <<: *default
     url: <%= ENV["DATABASE_URL"] %>
+    schema_search_path: classgOroku
   cache:
     <<: *primary_production
     url: <%= ENV["DATABASE_URL"] %>
+    schema_search_path: classgOroku
   queue:
     <<: *primary_production
     url: <%= ENV["DATABASE_URL"] %>
+    schema_search_path: classgOroku
   cable:
     <<: *primary_production
     url: <%= ENV["DATABASE_URL"] %>
+    schema_search_path: classgOroku
