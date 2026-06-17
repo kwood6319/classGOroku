@@ -1,2 +1,53 @@
-<h1>Games#new</h1>
-<p>Find me in app/views/games/new.html.erb</p>
+<div class="setup-page">
+  <div class="setup-header">
+    <h1 class="setup-title">classGOroku</h1>
+    <p class="setup-subtitle">Set up a new game</p>
+  </div>
+  <%= simple_form_for @game, html: { multipart: true, class: "setup-form" } do |f| %>
+    <%# Grid Size %>
+    <div class="setup-card">
+      <h2 class="setup-card-title">Grid Size</h2>
+      <div class="setup-row">
+        <div class="setup-field">
+          <%= f.input :grid_x,
+              label: "Columns",
+              as: :integer,
+              input_html: { min: 2, max: 20, value: 10 },
+              wrapper_html: { class: "mb-0" } %>
+        </div>
+        <span class="setup-times">×</span>
+        <div class="setup-field">
+          <%= f.input :grid_y,
+              label: "Rows",
+              as: :integer,
+              input_html: { min: 2, max: 20, value: 10 },
+              wrapper_html: { class: "mb-0" } %>
+        </div>
+      </div>
+    </div>
+    <%# Instructions CSV %>
+    <div class="setup-card">
+      <h2 class="setup-card-title">Instructions</h2>
+      <%= f.input :instructions_file,
+          as: :file,
+          label: "Upload CSV",
+          hint: "One instruction per row. Single column, no header needed." %>
+    </div>
+    <%# Teams %>
+    <div class="setup-card" data-controller="teams">
+      <h2 class="setup-card-title">Teams</h2>
+      <div id="teams-container" data-teams-target="container">
+        <div class="team-fields">
+          <input class="form-control" name="teams[][name]" value="Team 1" />
+          <input type="color" class="color-picker" name="teams[][color]" value="#E63946" />
+        </div>
+      </div>
+      <button type="button"
+              class="btn-add-team"
+              data-action="click->teams#addTeam">
+        + Add team
+      </button>
+    </div>
+    <%= f.submit "Create Game", class: "btn-primary-action" %>
+  <% end %>
+</div>
