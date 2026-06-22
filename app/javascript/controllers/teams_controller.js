@@ -33,6 +33,13 @@ export default class extends Controller {
       i.value = color
     })
 
+    const removeBtn = document.createElement("button")
+    removeBtn.type = "button"
+    removeBtn.className = "btn-remove-team"
+    removeBtn.textContent = "x"
+    removeBtn.addEventListener("click", () => clone.remove())
+    clone.appendChild(removeBtn)
+
     this.containerTarget.appendChild(clone)
   }
 
