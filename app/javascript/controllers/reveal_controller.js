@@ -7,4 +7,9 @@ export default class extends Controller {
     this.hiddenTarget.style.display = "none"
     this.contentTarget.style.display = "block"
   }
+
+  hide () {
+    this.hiddenTarget.style.display = "flex"
+    this.contentTarget.style.display = "none"
+  }
 }

@@ -38,9 +38,12 @@
           </button>
         </div>
         <div class="gm-goal-revealed" data-reveal-target="content" style="display:none;">
-          <p class="gm-hint">The goal square is:</p>
+          <p class="gm-hint">The goal is:</p>
           <p class="gm-goal-square">#<%= @game.goal_square + 1 %></p>
           <p class="gm-hint-sub">Use this to give hints if teams are stuck.</p>
+          <button class="btn-reveal" data-action="click->reveal#hide">
+            Hide goal
+          </button>
         </div>
       </div>
     </div>
