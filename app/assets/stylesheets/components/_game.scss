@@ -158,22 +158,25 @@ body.game-body {
 
 /* Board */
 .board-wrap {
-  padding: 2rem;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex: 1;
   min-height: 0;
-  position: relative;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .board-outer {
   display: grid;
   grid-template-columns: 24px repeat(var(--cols), 1fr) 24px;
   grid-template-rows: 24px repeat(var(--rows), 1fr) 24px;
-  gap: 3px;
-  position: absolute;
-  top: 2rem;
-  left: 300px;
-  right: 2rem;
-  bottom: 2rem;
+  gap: 5px;
+  width: 100%;
+  height: 100%;
+  max-width: calc(100vh - 2rem);
+  max-height: calc(100vh - 2rem);
 }
 
 .entry-cell {
