@@ -11,7 +11,7 @@ export default class extends Controller {
     "#9B5DE5", // purple
     "#F4A261", // orange
     "#3A86FF", // blue
-    "#06D6A0", // green
+    "#000000", // black
     "#f87ab1", // pink
   ]
 
