@@ -144,10 +144,11 @@ body.game-body {
   background: none;
   border: 1px solid #e5e5e3;
   color: #bbb;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  padding: 1rem 3rem;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.85rem;
+  font-size: 1.1rem;
+  font-weight: 500;
   width: 100%;
 
   &:hover {
@@ -317,11 +318,17 @@ body.game-body {
   background: none;
   border: 1px solid #e5e5e3;
   color: #999;
-  padding: 0.6rem 1.5rem;
+  padding: 1rem 3rem;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
+  font-weight: 500;
   width: 100%;
+
+  &:hover {
+    border-color: black;
+    color: black;
+  }
 }
 
 .goal-marker-win {
