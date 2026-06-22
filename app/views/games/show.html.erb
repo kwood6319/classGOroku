@@ -75,13 +75,13 @@
             <%# Current team overlays %>
             <% current_teams.each do |team| %>
               <div class="square-team-overlay square-team-overlay--current"
-                   style="background-color: <%= team.color %>; opacity: 0.5;">
+                   style="background-color: <%= team.color %>; opacity: 0.9;">
               </div>
             <% end %>
             <%# Historic team overlays %>
             <% historic_teams.each do |team| %>
               <div class="square-team-overlay square-team-overlay--historic"
-                   style="background-color: <%= team.color %>; opacity: 0.2;">
+                   style="background-color: <%= team.color %>; opacity: 0.5;">
               </div>
             <% end %>
           </div>
